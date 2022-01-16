@@ -1,0 +1,64 @@
+{
+  "private": false,
+  "main": "main/index.js",
+  "description": "Make your spotify fullscreen",
+  "version": "1.0.0",
+  "name": "fullspot",
+  "productName": "Fullspot",
+  "author": "zelr",
+  "homepage": "https://zelr.me",
+  "scripts": {
+    "clean": "rimraf dist main renderer/out renderer/.next",
+    "dev": "npm run build-electron && electron .",
+    "build-renderer": "next build renderer && next export renderer",
+    "build-electron": "tsc -p electron-src",
+    "build": "npm run build-renderer && npm run build-electron",
+    "pack-app": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "create-installer": "npm run pack-app && electron-installer-windows --config app-config.json",
+    "type-check": "tsc"
+  },
+  "dependencies": {
+    "@nut-tree/nut-js": "^2.0.0",
+    "electron-is-dev": "^1.1.0",
+    "electron-next": "^3.1.5",
+    "electron-serve": "^1.1.0",
+    "express": "^4.17.2",
+    "react": "^17.0.2",
+    "react-cookie": "^4.1.1",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-palette": "^1.0.2",
+    "react-screentype-hook": "^1.0.17",
+    "serve-static": "^1.14.2"
+  },
+  "devDependencies": {
+    "@types/connect": "^3.4.35",
+    "@types/express": "^4.17.13",
+    "@types/node": "^14.14.6",
+    "@types/react": "^16.9.9",
+    "@types/react-dom": "^16.9.9",
+    "autoprefixer": "^10.4.2",
+    "electron": "^13",
+    "electron-builder": "^22.9.1",
+    "next": "latest",
+    "postcss": "^8.4.5",
+    "rimraf": "^3.0.0",
+    "tailwindcss": "^3.0.13",
+    "typescript": "^4.0.5"
+  },
+  "build": {
+    "win": {
+      "icon": "./resources/win.png"
+    },
+    "asar": true,
+    "files": [
+      "main",
+      "renderer/out",
+      "resources"
+    ],
+    "directories": {
+      "buildResources": "resources"
+    }
+  }
+}
