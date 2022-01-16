@@ -10,12 +10,36 @@ import {
   IpcMainEvent,
   shell,
   autoUpdater,
+  dialog,
 } from "electron";
 import isDev from "electron-is-dev";
 import prepareNext from "electron-next";
 import express from "express";
 import util from "util";
 import { keyboard, Key } from "@nut-tree/nut-js";
+
+const startAutoUpdater = (squirrelUrl: string) => {
+  // The Squirrel application will watch the provided URL
+  autoUpdater.setFeedURL({ url: `http://${squirrelUrl}/` });
+
+  // Display a success message on successful update
+  autoUpdater.addListener(
+    "update-downloaded",
+    (_event, _releaseNotes, releaseName) => {
+      dialog.showMessageBox({
+        message: `The release ${releaseName} has been downloaded`,
+      });
+    }
+  );
+
+  // Display an error message on update error
+  autoUpdater.addListener("error", (error) => {
+    dialog.showMessageBox({ message: "Auto updater error: " + error });
+  });
+
+  // tell squirrel to check for updates
+  autoUpdater.checkForUpdates();
+};
 
 // this should be placed at top of main.js to handle setup events quickly
 if (handleSquirrelEvent()) {
@@ -55,10 +79,6 @@ function handleSquirrelEvent() {
       // - Write to the registry for things like file associations and
       //   explorer context menus
 
-      autoUpdater.setFeedURL({
-        url: "https://raw.githubusercontent.com/ZelrDev/fullspot/main/",
-      });
-
       // Install desktop and start menu shortcuts
       spawnUpdate(["--createShortcut", exeName]);
 
@@ -91,6 +111,9 @@ const authApp = express();
 
 // Prepare the renderer once the app is ready
 app.on("ready", async () => {
+  if (!isDev)
+    startAutoUpdater("cdn.zelr.me/download/fullspot");
+
   await prepareNext("./renderer");
 
   authApp.use(express.static(join(__dirname, "../renderer/out")));

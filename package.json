@@ -10,13 +10,14 @@
   "scripts": {
     "clean": "rimraf dist main renderer/out renderer/.next",
     "dev": "npm run build-electron && electron .",
-    "build-renderer": "next build renderer && next export renderer",
-    "build-electron": "tsc -p electron-src",
-    "build": "npm run build-renderer && npm run build-electron",
-    "pack-app": "npm run build && electron-builder --dir",
-    "dist": "npm run build && electron-builder",
-    "create-installer": "npm run pack-app && electron-installer-windows --config app-config.json",
-    "type-check": "tsc"
+    "build:core:renderer": "next build renderer && next export renderer",
+    "build:core:electron": "tsc -p electron-src",
+    "build:core": "npm run build:core:electron && npm run build:core:renderer",
+    "type-check": "tsc",
+    "increment-version": "git add . && git commit -m 'new version' && git push",
+    "build:package": "electron-packager . Fullspot --platform=win32 --arch=x64 --out=release/package",
+    "build:winstaller": "node ./build.js",
+    "build": "npm run increment-version && npm run build:core && npm run build:package && npm run build:winstaller"
   },
   "dependencies": {
     "@nut-tree/nut-js": "^2.0.0",
@@ -24,6 +25,7 @@
     "electron-next": "^3.1.5",
     "electron-serve": "^1.1.0",
     "express": "^4.17.2",
+    "global": "^4.4.0",
     "react": "^17.0.2",
     "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2",
@@ -41,11 +43,14 @@
     "autoprefixer": "^10.4.2",
     "electron": "^13",
     "electron-builder": "^22.9.1",
+    "electron-packager": "^15.4.0",
+    "electron-winstaller": "^5.0.0",
     "next": "latest",
     "postcss": "^8.4.5",
     "rimraf": "^3.0.0",
     "tailwindcss": "^3.0.13",
-    "typescript": "^4.0.5"
+    "typescript": "^4.0.5",
+    "versiony": "^2.0.1"
   },
   "build": {
     "win": {

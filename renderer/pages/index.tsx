@@ -146,6 +146,8 @@ const Home = () => {
       router.push("/howaboutwelogin.html");
     }
 
+    alert("Hello this is a test");
+
     return () => {};
   });
 
