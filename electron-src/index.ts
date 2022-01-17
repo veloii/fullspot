@@ -141,6 +141,8 @@ app.on("ready", async () => {
     },
   });
 
+  mainWindow.setIcon(join(__dirname, "../resources/win.png"),)
+
   const url = isDev
     ? "http://localhost:7536/index.html"
     : "http://localhost:7536/index.html";

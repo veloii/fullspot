@@ -2,7 +2,7 @@
   "private": false,
   "main": "main/index.js",
   "description": "Make your spotify fullscreen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "fullspot",
   "productName": "Fullspot",
   "author": "zelr",
@@ -14,10 +14,9 @@
     "build:core:electron": "tsc -p electron-src",
     "build:core": "npm run build:core:electron && npm run build:core:renderer",
     "type-check": "tsc",
-    "increment-version": "git add . && git commit -m 'new version' && git push",
-    "build:package": "electron-packager . Fullspot --platform=win32 --arch=x64 --out=release/package",
+    "build:package": "electron-packager . Fullspot --icon=resources/Icon.ico --platform=win32 --arch=x64 --out=release/package --force",
     "build:winstaller": "node ./build.js",
-    "build": "npm run increment-version && npm run build:core && npm run build:package && npm run build:winstaller"
+    "build": "npm run build:core && npm run build:package && npm run build:winstaller"
   },
   "dependencies": {
     "@nut-tree/nut-js": "^2.0.0",
