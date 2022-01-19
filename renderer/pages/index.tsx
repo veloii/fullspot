@@ -150,7 +150,7 @@ const Home = () => {
   });
 
   useEffect(() => {
-    alert("We have updated!");
+    alert("nada");
   }, []);
 
   return (

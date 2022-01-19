@@ -111,8 +111,7 @@ const authApp = express();
 
 // Prepare the renderer once the app is ready
 app.on("ready", async () => {
-  if (!isDev)
-    startAutoUpdater("cdn.zelr.me/download/fullspot");
+  if (!isDev) startAutoUpdater("50.116.41.169");
 
   await prepareNext("./renderer");
 
@@ -141,7 +140,7 @@ app.on("ready", async () => {
     },
   });
 
-  mainWindow.setIcon(join(__dirname, "../resources/win.png"),)
+  mainWindow.setIcon(join(__dirname, "../resources/win.png"));
 
   const url = isDev
     ? "http://localhost:7536/index.html"

@@ -2,9 +2,9 @@
   "private": false,
   "main": "main/index.js",
   "description": "Make your spotify fullscreen",
-  "version": "1.0.1",
-  "name": "fullspot",
-  "productName": "Fullspot",
+  "version": "1.1.0",
+  "name": "fullspotify",
+  "productName": "FullSpot",
   "author": "zelr",
   "homepage": "https://zelr.me",
   "scripts": {
